@@ -1,0 +1,257 @@
+/* Base Reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #1c1c1c;
+  color: #f2f2f2;
+  line-height: 1.6;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+h1, h2 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+/* Header Background Animation */
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.scrolling-images {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  height: 100%;
+  animation: scroll-left 30s linear infinite;
+  padding: 10px 0; /* spacing above and below */
+  box-sizing: border-box;
+}
+
+.scrolling-images img {
+  height: 100%;
+  width: auto;
+  opacity: 0.2;
+  filter: blur(2px);
+  object-fit: cover;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Header */
+header {
+  position: relative;
+  z-index: 1;
+  background-color: #000000;
+  text-align: center;
+  padding: 40px 20px;
+  height: 200px;
+  overflow: hidden;
+}
+
+header h1 {
+  font-size: 3.5rem;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 24px;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #888;
+  color: #fff;
+}
+
+/* Sections */
+section {
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+#about {
+  padding: 30px 20px;
+  max-width: 700px;
+  margin: auto;
+}
+
+#order {
+  padding: 20px 20px;
+}
+
+#order .btn {
+  margin-top: 15px;
+}
+
+#order ol {
+  padding-left: 0;
+  margin: 15px 0;
+  list-style-position: inside;
+}
+
+/* Product Grid */
+.design-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  padding: 0 10px;
+}
+
+/* Product Card */
+.product {
+  background-color: #2b2b2b;
+  padding: 10px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  max-width: 400px;        /* 👈 limits product width */
+  margin: auto;            /* 👈 centers them in grid cells */
+}
+
+.product:hover {
+  transform: scale(1.03);
+}
+
+.product img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.product h3 {
+  margin: 8px 0 4px;
+  font-size: 0.9rem;
+}
+
+.price .new {
+  font-size: 1.1rem;
+}
+
+.price .old {
+  text-decoration: line-through;  /* 👈 Adds the cut line */
+  color: #888;
+  font-size: 1.0rem;
+}
+
+.price .off {
+  font-size: 0.75rem;
+  padding: 2px 5px;
+}
+
+#order {
+  background-color: #2a2a2a;
+  padding: 20px 20px;
+  border-top: 1px solid #333;
+}
+
+#order h2 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  margin-top: 0px;
+}
+
+#order ol {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding-left: 20px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+#order .btn {
+  margin-top: 10px;
+}
+
+/* Contact Section */
+#contact {
+  background-color: #2a2a2a;
+  padding: 40px 20px;
+  border-top: 1px solid #444;
+}
+
+#contact h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+#contact a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+
+#contact a:hover {
+  color: #ffffff;
+}
+
+/* About Section (optional future use) */
+#about {
+  padding: 30px 20px;
+  max-width: 700px;
+  margin: auto;
+}
+
+/* Responsive Grid for Laptop (3 per row) */
+@media screen and (min-width: 768px) {
+  .design-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Force 1 column per row on small phones */
+@media screen and (max-width: 576px) {
+  .design-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Footer */
+footer {
+  background-color: #000000;
+  color: #888;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/*------------------------------------------------------------------------------*/
