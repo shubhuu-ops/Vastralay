@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment | Vastralay</title>
+  <link rel="stylesheet" href="style_payment.css" />
+</head>
+<body>
+
+  <h1>Complete Your Payment</h1>
+
+  <div class="info">
+    <h3>Order Summary</h3>
+    <p><strong>Name:</strong> <span id="name"></span></p>
+    <p><strong>Phone:</strong> <span id="phone"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+    <p><strong>Size:</strong> <span id="size"></span></p>
+    <p><strong>Suggestions:</strong> <span id="note"></span></p>
+    <p><strong>T-shirts:</strong> <span id="tshirts"></span></p>
+    <p><strong>Name Print:</strong> <span id="nameprint"></span></p>
+    <p><strong>Total Amount:</strong> ₹<span id="total"></span></p>
+  </div>
+
+  <div class="qr">
+    <h3>Scan to Pay</h3>
+    <img src="qr.png" alt="Scan QR to Pay" width="250" />
+  </div>
+
+  
+
+  <div style="text-align: center; margin-top: 30px;">
+    <button class="btn" onclick="redirectToGoogleForm()">Upload Screenshot & Confirm Order</button>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const get = key => urlParams.get(key) || '';
+
+    // Fill visible order summary
+    document.getElementById('name').textContent = get('name');
+    document.getElementById('phone').textContent = get('phone');
+    document.getElementById('email').textContent = get('email');
+    document.getElementById('size').textContent = get('size');
+    document.getElementById('note').textContent = get('note');
+    document.getElementById('tshirts').textContent = get('tshirts');
+    document.getElementById('nameprint').textContent = get('nameprint');
+    document.getElementById('total').textContent = get('total');
+
+    // Redirect with prefilled fields
+    function redirectToGoogleForm() {
+      const gFormBase = "https://docs.google.com/forms/d/1uW6i5grkY-6oB2ofqQzZHhEJNg7V8raNy6hbfsVNqkk/viewform";
+
+      const prefill = new URLSearchParams({
+        "entry.2113051236": get("name"),
+        "entry.2101901322": get("phone"),
+        "entry.881569964": get("email"),
+        "entry.1410456391": get("size"),
+        "entry.116141019": get("note"),
+        "entry.2035278212": get("tshirts"),
+        "entry.1701257488": get("nameprint"),
+        "entry.1266718476": get("total")
+      });
+
+      const finalURL = `${gFormBase}?usp=pp_url&${prefill.toString()}`;
+      window.open(finalURL, "_blank");
+    }
+  </script>
+
+</body>
+</html>

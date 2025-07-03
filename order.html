@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order - Vastralay | IIT BHU</title>
+  <link rel="stylesheet" href="style_order.css">
+</head>
+<body>
+
+<header>
+  <h1>Order Your T-Shirts</h1>
+  <p>Select what you love — extra ₹30 for name print (optional)</p>
+</header>
+
+<div class="container">
+
+  <!-- Product Rows -->
+  <div class="product-row">
+    <img src="images/t1.jpeg" alt="Chai Lover" />
+    <div class="product-info">
+      <div class="product-name">Chai Lover</div>
+      <div class="product-price">₹450</div>
+    </div>
+    <button class="toggle-btn" data-id="0">Add</button>
+  </div>
+
+  <div class="product-row">
+    <img src="images/t2.jpeg" alt="Coffee Lover" />
+    <div class="product-info">
+      <div class="product-name">Coffee Lover</div>
+      <div class="product-price">₹450</div>
+    </div>
+    <button class="toggle-btn" data-id="1">Add</button>
+  </div>
+
+  <div class="product-row">
+    <img src="images/t3.jpeg" alt="Heavy Coder" />
+    <div class="product-info">
+      <div class="product-name">Heavy Coder</div>
+      <div class="product-price">₹450</div>
+    </div>
+    <button class="toggle-btn" data-id="2">Add</button>
+  </div>
+
+  <div class="product-row">
+    <img src="images/t4.jpeg" alt="Dharmik" />
+    <div class="product-info">
+      <div class="product-name">Dharmik</div>
+      <div class="product-price">₹450</div>
+    </div>
+    <button class="toggle-btn" data-id="3">Add</button>
+  </div>
+
+  <div class="product-row">
+    <img src="images/t5.jpeg" alt="Eat Sleep Repeat" />
+    <div class="product-info">
+      <div class="product-name">Eat Sleep Repeat</div>
+      <div class="product-price">₹450</div>
+    </div>
+    <button class="toggle-btn" data-id="4">Add</button>
+  </div>
+
+  <div class="product-row">
+    <img src="images/t6.jpeg" alt="Cool Boii" />
+    <div class="product-info">
+      <div class="product-name">Cool Boii</div>
+      <div class="product-price">₹450</div>
+    </div>
+    <button class="toggle-btn" data-id="5">Add</button>
+  </div>
+
+  <!-- Checkbox for Name Print
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" id="namePrint" />
+      ✨ Add My Name on Each T-shirt (+₹30)
+    </label>
+  </div> -->
+
+  <div class="name-print-toggle">
+    <button type="button" id="toggleNamePrint" class="toggle-btn name-toggle">Add</button>
+    <span>✨ Add my name on each T-shirt (+₹30)</span>
+  </div>
+
+  <!-- Total Summary -->
+  <div class="summary">
+    Total: ₹<span id="total">0</span>
+  </div>
+
+  <!-- Form Section -->
+  <div class="form-section">
+    <h3>Customer Details</h3>
+    <form id="orderForm" target="_blank" action="payment.html" method="GET">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="tel" name="phone" placeholder="Phone Number" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <select name="size" required>
+        <option value="">Select T-shirt Size</option>
+        <option value="S">Small (S)</option>
+        <option value="M">Medium (M)</option>
+        <option value="L">Large (L)</option>
+        <option value="XL">Extra Large (XL)</option>
+      </select>
+      <input type="text" name="note" placeholder="Any suggestions" />
+
+      <!-- Hidden fields for JS-calculated data -->
+      <input type="hidden" name="tshirts" id="hiddenTshirts" />
+      <input type="hidden" name="nameprint" id="hiddenNamePrint" />
+      <input type="hidden" name="total" id="hiddenTotal" />
+
+      <button type="submit" class="btn">Submit Order</button>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  const prices = [450, 450, 450, 450, 450, 450];
+  const counts = [0, 0, 0, 0, 0, 0];
+  let namePrintActive = false;
+
+  // Function to update total
+  const updateTotal = () => {
+    let total = 0;
+    for (let i = 0; i < counts.length; i++) {
+      total += counts[i] * prices[i];
+    }
+    if (namePrintActive) {
+      const totalQty = counts.reduce((a, b) => a + b, 0);
+      total += totalQty * 30;
+    }
+    document.getElementById('total').textContent = total;
+  };
+
+  // Add/Remove buttons for each T-shirt
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = parseInt(btn.getAttribute('data-id'));
+      if (!isNaN(id)) {
+        if (counts[id] === 0) {
+          counts[id] = 1;
+          btn.textContent = "Remove";
+          btn.classList.add("active");
+        } else {
+          counts[id] = 0;
+          btn.textContent = "Add";
+          btn.classList.remove("active");
+        }
+        updateTotal();
+      }
+    });
+  });
+
+  // Toggle button for "Add My Name on Each T-shirt"
+  document.getElementById('toggleNamePrint').addEventListener('click', function () {
+    namePrintActive = !namePrintActive;
+    this.textContent = namePrintActive ? "Remove" : "Add";
+    this.classList.toggle("active");
+    updateTotal();
+  });
+
+  // Form submission logic: prepare hidden fields
+  document.getElementById("orderForm").addEventListener("submit", () => {
+    const selectedTshirts = [];
+    document.querySelectorAll(".toggle-btn").forEach((btn, index) => {
+      const id = btn.getAttribute('data-id');
+      if (btn.textContent === "Remove" && id !== null) {
+        const name = btn.parentElement.querySelector(".product-name").textContent;
+        selectedTshirts.push(name);
+      }
+    });
+
+    document.getElementById("hiddenTshirts").value = selectedTshirts.join(", ");
+    document.getElementById("hiddenNamePrint").value = namePrintActive ? "Yes" : "No";
+    document.getElementById("hiddenTotal").value = document.getElementById("total").textContent;
+  });
+</script>
+
+
+</body>
+</html>
